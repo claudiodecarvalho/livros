@@ -1,0 +1,77 @@
+<form [formGroup]="livroForm" (ngSubmit)="submit()" class="needs-validation" novalidate>
+  <div class="row g-3">
+    <div class="col-12">
+      <label class="form-label">Título <span class="text-danger">*</span></label>
+      <input formControlName="titulo" type="text" class="form-control" required [maxLength]="40" />
+      <div *ngIf="livroForm.get('titulo')?.invalid && (livroForm.get('titulo')?.touched || livroForm.get('titulo')?.dirty)" class="text-danger small">Título é obrigatório.</div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <label class="form-label">Editora <span class="text-danger">*</span></label>
+      <input formControlName="editora" type="text" class="form-control" required [maxLength]="40" />
+      <div *ngIf="livroForm.get('editora')?.invalid && (livroForm.get('editora')?.touched || livroForm.get('editora')?.dirty)" class="text-danger small">Editora é obrigatória.</div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <label class="form-label">Edição <span class="text-danger">*</span></label>
+      <input formControlName="edicao" type="number" class="form-control" required [maxlength]="3"/>
+      <div *ngIf="livroForm.get('edicao')?.invalid && (livroForm.get('edicao')?.touched || livroForm.get('edicao')?.dirty)" class="text-danger small">Edição é obrigatória.</div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <label class="form-label">Ano de Publicação <span class="text-danger">*</span></label>
+      <input formControlName="anoPublicacao" type="number" class="form-control" required [maxLength]="4"  />
+      <div *ngIf="livroForm.get('anoPublicacao')?.invalid && (livroForm.get('anoPublicacao')?.touched || livroForm.get('anoPublicacao')?.dirty)" class="text-danger small">Ano de publicação é obrigatório.</div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <label class="form-label">Data de Cadastro <span class="text-danger">*</span></label>
+      <input formControlName="dataCadastro" type="date" class="form-control" required />
+      <div *ngIf="livroForm.get('dataCadastro')?.invalid && (livroForm.get('dataCadastro')?.touched || livroForm.get('dataCadastro')?.dirty)" class="text-danger small">Data de cadastro é obrigatória.</div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <label class="form-label">Valor do Livro <span class="text-danger">*</span></label>
+      <input
+        formControlName="valorLivro"
+        type="text"
+        class="form-control"
+        required
+        currencyMask
+        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', allowNegative: false, align: 'right' }"
+        inputmode="decimal"
+      />
+      <div *ngIf="livroForm.get('valorLivro')?.invalid && (livroForm.get('valorLivro')?.touched || livroForm.get('valorLivro')?.dirty)" class="text-danger small">Valor do livro é obrigatório.</div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <label class="form-label">Autor <span class="text-danger">*</span></label>
+      <div [formGroup]="autor">
+        <select formControlName="codigoAutor" class="form-select" (change)="onAutorSelect($event)" required>
+          <option value="">Selecione um autor</option>
+          <option *ngFor="let a of autoresList" [value]="a.codigoAutor">{{a.nome}}</option>
+        </select>
+        <div *ngIf="autor.get('codigoAutor')?.invalid && (autor.get('codigoAutor')?.touched || autor.get('codigoAutor')?.dirty)" class="text-danger small">
+          Autor é obrigatório.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <label class="form-label">Assunto <span class="text-danger">*</span></label>
+      <div [formGroup]="assunto">
+        <select formControlName="codigoAssunto" class="form-select" (change)="onAssuntoSelect($event)" required>
+          <option value="">Selecione um assunto</option>
+          <option *ngFor="let s of assuntosList" [value]="s.codigoAssunto">{{s.descricao}}</option>
+        </select>
+        <div *ngIf="assunto.get('codigoAssunto')?.invalid && (assunto.get('codigoAssunto')?.touched || assunto.get('codigoAssunto')?.dirty)" class="text-danger small">
+          Assunto é obrigatório.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Salvar Livro</button>
+    </div>
+  </div>
+</form>
