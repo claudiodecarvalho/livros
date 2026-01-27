@@ -1,0 +1,12 @@
+target
+!target/livros-api-0.0.1-SNAPSHOT.jar
+.git
+.gitignore
+.mvn
+mvnw
+mvnw.cmd
+README.md
+*.log
+*.tmp
+.idea
+.vscode

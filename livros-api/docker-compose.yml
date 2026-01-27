@@ -1,0 +1,36 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: livros-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: livros
+      POSTGRES_USER: livros
+      POSTGRES_PASSWORD: livros
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: .
+    image: livros-api
+    container_name: livros-api
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/livros
+      SPRING_DATASOURCE_USERNAME: livros
+      SPRING_DATASOURCE_PASSWORD: livros
+
+  frontend:
+    build: ../livros-frontend
+    container_name: livros-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
