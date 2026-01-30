@@ -31,6 +31,28 @@ services:
       - "4200:80"
     depends_on:
       - api
+      
+  prometheus:
+    image: prom/prometheus
+    container_name: livros-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - api
+
+  grafana:
+    image: grafana/grafana
+    container_name: livros-grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      - prometheus
 
 volumes:
   postgres_data:
+  grafana_data:
